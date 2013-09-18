@@ -61,18 +61,26 @@ public abstract class DataExpandableAdapter<TData, TGroupData, TChildData> exten
 
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(mGroupLayout, null);
+            convertView = onCreateGroupView(groupPosition, parent);
         }
         mGroupViewBinder.setViewValue(convertView, getGroupData(groupPosition), parent, groupPosition, isExpanded);
         return convertView;
     }
 
+    protected View onCreateGroupView(int groupPosition, ViewGroup parent) {
+        return ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(mGroupLayout, parent, false);
+    }
+
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(mChildLayout, null);
+            convertView = onCreateChildView(groupPosition, childPosition, parent);
         }
         mChildViewBinder.setViewValue(convertView, getChildData(groupPosition, childPosition), parent, groupPosition, childPosition);
         return convertView;
+    }
+
+    protected View onCreateChildView(int groupPosition, int childPosition, ViewGroup parent) {
+        return ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(mChildLayout, parent, false);
     }
 
     public boolean isChildSelectable(int groupPosition, int childPosition) {

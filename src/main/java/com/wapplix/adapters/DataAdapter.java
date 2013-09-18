@@ -33,10 +33,14 @@ public abstract class DataAdapter<TData, TItemData> extends BaseAdapter implemen
 
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(mItemLayout, parent, false);
+            convertView = onCreateView(position, parent);
         }
         mViewBinder.setViewValue(convertView, getItemData(position), parent, position);
         return convertView;
+    }
+
+    protected View onCreateView(int position, ViewGroup parent) {
+        return ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(mItemLayout, parent, false);
     }
     
     public TData getData() {
