@@ -59,6 +59,10 @@ public abstract class Endpoint<TResponse> {
         return mUrlBase;
     }
 
+    public void setUrlBase(String urlBase) {
+        mUrlBase = urlBase;
+    }
+
     public Map<String, String> getQueryParameters() {
         return mQueryParameters;
     }
